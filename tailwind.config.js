@@ -13,29 +13,31 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
-				clrWhite: '#F5F3E0',
+				clrWhite: '#fffdef',
 				clrBlack: '#0E1116',
 				clrRed: {
-					DEFAULT: '#E58E76',
-					light: '#E79C88',
+					DEFAULT: '#EF6157',
+					light: '#F3847C',
 				},
 				clrPurple: {
 					DEFAULT: '#9DA0BE',
-					light: '#A9ACC6',
+					light: '#CED0DE',
 				},
 				clrGreen: {
 					DEFAULT: '#81B29A',
-					light: '#8DB9A4',
+					light: '#A6C9B8',
 				},
 				clrYellow: {
-					DEFAULT: '#F2CC8F',
-					light: '#F4D5A4',
+					DEFAULT: '#F4D7A4',
+					light: '#F8E7C9',
 				},
 			},
 		},
 	},
 	variants: {
-		extend: {},
+		extend: {
+			borderWidth: ['hover'],
+		},
 	},
 	plugins: [],
 };

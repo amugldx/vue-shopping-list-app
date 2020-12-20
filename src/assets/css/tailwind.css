@@ -10,11 +10,12 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	transition: all;
 }
 
 body {
-	background-color: #f5f3e0;
+	background-color: #fffdef;
 	color: #0e1116;
-	font: 20px;
+	font-size: 20px;
 	font-family: 'JetBrains Mono', monospace;
 }
