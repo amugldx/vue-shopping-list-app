@@ -11,8 +11,9 @@
 		<div v-else>
 			<button
 				@click="$emit('btn-clicked')"
-				class="px-4 py-2 transition-all"
+				class="border-clrBlack border-4 px-4 py-2 text-xl transition-all rounded-lg focus:outline-none active:outline-none"
 				:class="color"
+				:type="type ? type : 'button'"
 				><slot
 			/></button>
 		</div>
@@ -22,7 +23,7 @@
 <script>
 	export default {
 		name: 'AppButton',
-		props: ['color', 'to'],
+		props: ['color', 'to', 'type'],
 		setup() {
 			return {};
 		},

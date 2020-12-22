@@ -29,22 +29,46 @@ export default createStore({
 	},
 	mutations: {
 		addItem(state, payload) {
-			state.itemsList.push({
-				id: payload.id,
-				itemName: payload.itemName,
-				quantity: payload.quantity,
-				checked: false,
+			const foundItem = state.itemsList.find(
+				(item) => item.itemName === payload.itemName,
+			);
+			const foundCategoryItem = state.categories.find(
+				(item) => item.category === payload.category,
+			);
+			if (!foundItem) {
+				state.itemsList.push({
+					id: payload.id,
+					itemName: payload.itemName,
+					quantity: payload.quantity,
+					checked: false,
+				});
+			}
+			if (foundCategoryItem) {
+				if (!foundCategoryItem.categoryItems.includes(payload.itemName)) {
+					foundCategoryItem.categoryItems.push(payload.itemName);
+				}
+			} else {
+				state.categories.push({
+					category: payload.category,
+					categoryItems: [payload.itemName],
+				});
+			}
+		},
+		addChecked(state, payload) {
+			const item = state.itemsList.find((item) => {
+				return item.id === payload.id;
 			});
-			state.categories.push({
-				category: payload.category,
-				categoryItems: [...state.categories.categoryItems, payload.itemName],
-			});
-			console.log('state = ' + state);
+			if (item) {
+				item.checked = payload.checked;
+			}
 		},
 	},
 	actions: {
 		addItem(context, payload) {
 			context.commit('addItem', payload);
+		},
+		addChecked(context, payload) {
+			context.commit('addChecked', payload);
 		},
 	},
 	getters: {

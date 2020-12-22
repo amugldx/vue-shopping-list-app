@@ -1,8 +1,11 @@
 <template>
 	<div>
 		<div class="flex flex-row items-center">
-			<div class="px-4 py-2 flex-none w-1/10">
-				<div v-if="checked" class="bg-clrGreen rounded-full p-1">
+			<div
+				@click="toggleChecked"
+				class="px-4 py-2 flex-none w-1/10 transition-all"
+			>
+				<div v-if="checked" class="bg-clrGreen rounded-full p-1 transition-all">
 					<svg
 						class="w-10 h-10"
 						fill="none"
@@ -18,7 +21,8 @@
 						></path>
 					</svg>
 				</div>
-				<div v-else class="w-12 h-12 rounded-full bg-clrRed"> </div>
+				<div v-else class="w-12 h-12 transition-all rounded-full bg-clrRed">
+				</div>
 			</div>
 			<div class="ml-4 flex-grow w-7/10">
 				{{ itemName }}<div class="text-base font-light">{{ quantity }}</div>
@@ -33,13 +37,23 @@
 </template>
 
 <script>
+	import { ref } from 'vue';
+	import { useStore } from 'vuex';
 	import AppButton from '../UI/AppButton.vue';
 	export default {
 		components: { AppButton },
 		name: 'ItemSingle',
-		props: ['itemName', 'quantity', 'checked'],
-		setup() {
-			return {};
+		props: ['itemName', 'quantity', 'id', 'checked'],
+		setup(props) {
+			const store = useStore();
+			const checked = ref(false);
+			const toggleChecked = () => {
+				checked.value = !checked.value;
+				console.log(checked.value);
+				store.dispatch('addChecked', { id: props.id, checked: checked.value });
+			};
+
+			return { toggleChecked };
 		},
 	};
 </script>

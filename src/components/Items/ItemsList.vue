@@ -8,6 +8,7 @@
 			<ItemSingle
 				:itemName="item.itemName"
 				:quantity="item.quantity"
+				:id="item.id"
 				:checked="item.checked"
 			/>
 		</div>

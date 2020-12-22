@@ -9,7 +9,10 @@
 			v-for="cat in categoriesList"
 			:key="cat.category"
 		>
-			<CategorySingle :category="cat.category" />
+			<CategorySingle
+				:category="cat.category"
+				:categoryList="cat.categoryItems"
+			/>
 		</div>
 	</div>
 </template>
