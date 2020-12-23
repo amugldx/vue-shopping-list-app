@@ -6,18 +6,25 @@
 				>Add New Item</AppButton
 			>
 		</div>
-		<div class="flex flex-row mt-10">
-			<div class="mr-4 w-2/3">
-				<ItemsList />
+		<div v-if="items.length > 0">
+			<div class="flex flex-row mt-10">
+				<div class="mr-4 w-2/3">
+					<ItemsList :itemsList="items" />
+				</div>
+				<div class="ml-4 w-1/3">
+					<CategoriesList />
+				</div>
 			</div>
-			<div class="ml-4 w-1/3">
-				<CategoriesList />
-			</div>
+		</div>
+		<div v-else class="flex justify-center mt-20 text-3xl">
+			Please add an item
 		</div>
 	</div>
 </template>
 
 <script>
+	import { useStore } from 'vuex';
+	import { computed } from 'vue';
 	import CategoriesList from '../components/Categories/CategoriesList.vue';
 	import ItemsList from '../components/Items/ItemsList.vue';
 	import AppButton from '../components/UI/AppButton.vue';
@@ -25,7 +32,14 @@
 		components: { ItemsList, AppButton, CategoriesList },
 		name: 'HomePage',
 		setup() {
-			return {};
+			const store = useStore();
+			const items = computed(() => {
+				return store.getters.getItemsList;
+			});
+
+			return {
+				items,
+			};
 		},
 	};
 </script>

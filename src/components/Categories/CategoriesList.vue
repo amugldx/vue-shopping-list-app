@@ -4,16 +4,19 @@
 			class="bg-clrPurple rounded-lg border-4 mt-4 border-clrBlack flex items-center justify-center font-bold text-2xl p-4"
 			>Categories</div
 		>
-		<div
-			class="border-4 mt-4 rounded-lg border-clrBlack"
-			v-for="cat in categoriesList"
-			:key="cat.category"
+		<transition-group
+			tag="div"
+			enter-active-class="animate__animated animate__fadeIn animate__fast"
+			leave-active-class="animate__animated animate__fadeOut animate__fast"
 		>
-			<CategorySingle
-				:category="cat.category"
-				:categoryList="cat.categoryItems"
-			/>
-		</div>
+			<div
+				class="border-4 mt-4 rounded-lg border-clrBlack"
+				v-for="cat in categoriesList"
+				:key="cat"
+			>
+				<CategorySingle :category="cat" />
+			</div>
+		</transition-group>
 	</div>
 </template>
 
@@ -28,7 +31,7 @@
 		setup() {
 			const store = useStore();
 			const categoriesList = computed(() => {
-				return store.getters.getCategoriesList;
+				return store.getters.getCategories;
 			});
 
 			return {

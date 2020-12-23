@@ -7,50 +7,30 @@ export default createStore({
 				id: '1',
 				itemName: 'Banana',
 				quantity: '1 dozen',
+				category: 'Fruits',
 				checked: false,
 			},
 			{
 				id: '2',
 				itemName: 'Potato',
 				quantity: '1 kg',
+				category: 'Vegitables',
 				checked: true,
-			},
-		],
-		categories: [
-			{
-				category: 'Fruits',
-				categoryItems: ['Banana'],
-			},
-			{
-				category: 'Vegetables',
-				categoryItems: ['Potato'],
 			},
 		],
 	},
 	mutations: {
 		addItem(state, payload) {
-			const foundItem = state.itemsList.find(
+			const foundItem = state.itemsList.some(
 				(item) => item.itemName === payload.itemName,
-			);
-			const foundCategoryItem = state.categories.find(
-				(item) => item.category === payload.category,
 			);
 			if (!foundItem) {
 				state.itemsList.push({
 					id: payload.id,
 					itemName: payload.itemName,
 					quantity: payload.quantity,
-					checked: false,
-				});
-			}
-			if (foundCategoryItem) {
-				if (!foundCategoryItem.categoryItems.includes(payload.itemName)) {
-					foundCategoryItem.categoryItems.push(payload.itemName);
-				}
-			} else {
-				state.categories.push({
 					category: payload.category,
-					categoryItems: [payload.itemName],
+					checked: false,
 				});
 			}
 		},
@@ -62,6 +42,12 @@ export default createStore({
 				item.checked = payload.checked;
 			}
 		},
+		removeItem(state, payload) {
+			const filteredItems = state.itemsList.filter((item) => {
+				return item.id !== payload.id;
+			});
+			state.itemsList = filteredItems;
+		},
 	},
 	actions: {
 		addItem(context, payload) {
@@ -70,13 +56,23 @@ export default createStore({
 		addChecked(context, payload) {
 			context.commit('addChecked', payload);
 		},
+		removeItem(context, payload) {
+			context.commit('removeItem', payload);
+		},
 	},
 	getters: {
 		getItemsList(state) {
 			return state.itemsList;
 		},
-		getCategoriesList(state) {
-			return state.categories;
+		getCategories(state) {
+			const categoryList = [];
+			state.itemsList.forEach((item) => {
+				categoryList.push(item.category);
+			});
+			const returnedList = categoryList.filter((value, index, array) => {
+				return array.indexOf(value) === index;
+			});
+			return returnedList;
 		},
 	},
 });

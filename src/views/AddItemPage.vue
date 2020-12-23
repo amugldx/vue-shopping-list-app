@@ -109,7 +109,6 @@
 					quantity:
 						values.quantity.charAt(0).toUpperCase() + values.quantity.slice(1),
 				};
-				console.log(newItem);
 				store.dispatch('addItem', newItem);
 				actions.resetForm();
 				router.push('/');

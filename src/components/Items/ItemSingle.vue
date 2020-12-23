@@ -28,7 +28,9 @@
 				{{ itemName }}<div class="text-base font-light">{{ quantity }}</div>
 			</div>
 			<div class="mr-6 flex-none w-2/10">
-				<AppButton color="rounded-lg bg-clrRed hover:bg-clrRed-light"
+				<AppButton
+					color="rounded-lg bg-clrRed hover:bg-clrRed-light"
+					@btn-clicked="removeItem"
 					>Remove</AppButton
 				>
 			</div>
@@ -49,11 +51,15 @@
 			const checked = ref(false);
 			const toggleChecked = () => {
 				checked.value = !checked.value;
-				console.log(checked.value);
 				store.dispatch('addChecked', { id: props.id, checked: checked.value });
 			};
+			const removeItem = () => {
+				store.dispatch('removeItem', {
+					id: props.id,
+				});
+			};
 
-			return { toggleChecked };
+			return { toggleChecked, removeItem };
 		},
 	};
 </script>
